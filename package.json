@@ -1,5 +1,5 @@
 {
-  "name": "ai-code-reviewer",
+  "name": "local-ai-code-reviewer",
   "version": "0.1.0",
   "description": "Context-aware AI-powered code review tool",
   "type": "module",
