@@ -83,6 +83,42 @@ Create `.codereviewerrc.json` in your project root:
 - `GEMINI_API_KEY` — For Gemini provider
 - `ANTHROPIC_API_KEY` — For Claude provider
 
+#### Setting environment variables from the command line
+
+When the CLI is installed globally, you can still override these values directly from your shell:
+
+- **For a single command**
+
+  ```bash
+  AI_PROVIDER=claude ANTHROPIC_API_KEY="your-key" code-reviewer analyze src/
+  ```
+
+  ```bash
+  AI_PROVIDER=gemini GEMINI_API_KEY="your-key" code-reviewer analyze src/
+  ```
+
+  ```bash
+  OLLAMA_HOST="http://localhost:11435" code-reviewer analyze src/
+  ```
+
+- **For the current shell session**
+
+  ```bash
+  export AI_PROVIDER=claude
+  export ANTHROPIC_API_KEY="your-key"
+
+  code-reviewer analyze src/
+  ```
+
+- **Persistent (e.g. in `~/.zshrc` or `~/.bashrc`)**
+
+  ```bash
+  export AI_PROVIDER=gemini
+  export GEMINI_API_KEY="your-key"
+  ```
+
+  After saving, open a new terminal (or run `source ~/.zshrc`) and use `code-reviewer` as usual.
+
 ## Providers
 
 | Provider | Cost | Notes |
