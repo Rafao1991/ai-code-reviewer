@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "provider": "ollama",
+    "ollama": {
+      "host": "http://localhost:11434",
+      "model": "codellama:13b"
+    },
+    "claude": {
+      "model": "claude-sonnet-4-5-20250929"
+    },
+    "gemini": {
+      "model": "gemini-2.0-flash"
+    }
+  },
+  "rules": {
+    "performance": true,
+    "readability": true,
+    "maintainability": true
+  },
+  "ignore": ["node_modules", "dist", "*.test.ts"],
+  "indexing": {
+    "enabled": true
+  }
+}

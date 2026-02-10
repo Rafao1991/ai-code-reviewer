@@ -1,0 +1,212 @@
+{
+  "version": 1,
+  "indexedAt": "2026-02-09T20:00:28.502Z",
+  "projectPath": "/Users/rafaelsousa/Developer/Personal/ia-tryout",
+  "snippets": [
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/config-parser-complex.ts:parseEnv:2",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/config-parser-complex.ts",
+      "functionName": "parseEnv",
+      "code": "export function parseEnv(key: string): string | number | boolean {\n  const val = process.env[key];\n  if (!val) return '';\n  if (val === 'true') return true;\n  if (val === 'false') return false;\n  if (val === '0') return 0;\n  if (/^\\d+$/.test(val)) return parseInt(val, 10);\n  if (/^\\d+\\.\\d+$/.test(val)) return parseFloat(val);\n  if (val.startsWith('\"') && val.endsWith('\"')) return val.slice(1, -1);\n  if (val.startsWith(\"'\") && val.endsWith(\"'\")) return val.slice(1, -1);\n  return val;\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": false,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 11
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/data-aggregation-long.ts:aggregateReport:2",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/data-aggregation-long.ts",
+      "functionName": "aggregateReport",
+      "code": "export function aggregateReport(data: number[][]) {\n  let total = 0;\n  let count = 0;\n  let min = Infinity;\n  let max = -Infinity;\n  const sums: number[] = [];\n  const avgs: number[] = [];\n  for (const row of data) {\n    const rowSum = row.reduce((a, b) => a + b, 0);\n    total += rowSum;\n    count += row.length;\n    min = Math.min(min, ...row);\n    max = Math.max(max, ...row);\n    sums.push(rowSum);\n    avgs.push(rowSum / row.length);\n  }\n  return { total, count, min, max, sums, avgs, overallAvg: total / count };\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": false,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 2
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/event-handler-fat.ts:handleSubmit:2",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/event-handler-fat.ts",
+      "functionName": "handleSubmit",
+      "code": "export function handleSubmit(e: Event) {\n  e.preventDefault();\n  const form = e.target as HTMLFormElement;\n  const name = (form.elements.namedItem('name') as HTMLInputElement).value;\n  const email = (form.elements.namedItem('email') as HTMLInputElement).value;\n  if (!name.trim()) {\n    form.reportValidity();\n    return;\n  }\n  if (!email.includes('@')) {\n    form.reportValidity();\n    return;\n  }\n  fetch('/api/submit', {\n    method: 'POST',\n    headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify({ name, email }),\n  })\n    .then((r) => r.json())\n    .then((data) => {\n      if (data.ok) window.location.href = '/success';\n      else alert(data.error);\n    })\n    .catch((err) => alert(err.message));\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": false,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 4
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/http-client-sequential.ts:syncUserFromRemote:2",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/http-client-sequential.ts",
+      "functionName": "syncUserFromRemote",
+      "code": "export async function syncUserFromRemote(remoteId: string) {\n  const profile = await fetch(`https://api.example.com/users/${remoteId}`);\n  const profileData = await profile.json();\n  const avatar = await fetch(profileData.avatarUrl);\n  const avatarBlob = await avatar.blob();\n  const localUser = await saveToLocalDb({ ...profileData, avatar: avatarBlob });\n  await notifyWebhook('user.synced', localUser.id);\n  return localUser;\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": true,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 1
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/sample-with-issues.ts:veryLongFunction:9",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/sample-with-issues.ts",
+      "functionName": "veryLongFunction",
+      "code": "function veryLongFunction() {\n  const a = 1;\n  const b = 2;\n  const c = 3;\n  const d = 4;\n  const e = 5;\n  const f = 6;\n  const g = 7;\n  const h = 8;\n  const i = 9;\n  const j = 10;\n  const k = 11;\n  const l = 12;\n  const m = 13;\n  const n = 14;\n  const o = 15;\n  const p = 16;\n  const q = 17;\n  const r = 18;\n  const s = 19;\n  const t = 20;\n  const u = 21;\n  const v = 22;\n  const w = 23;\n  const x = 24;\n  const y = 25;\n  const z = 26;\n  return (\n    a +\n    b +\n    c +\n    d +\n    e +\n    f +\n    g +\n    h +\n    i +\n    j +\n    k +\n    l +\n    m +\n    n +\n    o +\n    p +\n    q +\n    r +\n    s +\n    t +\n    u +\n    v +\n    w +\n    x +\n    y +\n    z\n  );\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": false,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 1
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/transform-pipeline-long.ts:transformInput:2",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/demo/transform-pipeline-long.ts",
+      "functionName": "transformInput",
+      "code": "export function transformInput(raw: string): unknown {\n  const trimmed = raw.trim();\n  const lower = trimmed.toLowerCase();\n  const noExtraSpaces = lower.replace(/\\s+/g, ' ');\n  const parts = noExtraSpaces.split(' ');\n  const filtered = parts.filter((p) => p.length > 1);\n  const mapped = filtered.map((p) => p.replace(/[^a-z0-9]/g, ''));\n  const deduped = [...new Set(mapped)];\n  const sorted = deduped.sort();\n  const joined = sorted.join('-');\n  const prefixed = `out_${joined}`;\n  const suffixed = `${prefixed}_v1`;\n  return JSON.parse(JSON.stringify({ value: suffixed }));\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": false,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 1
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/config/loader.ts:loadConfig:41",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/config/loader.ts",
+      "functionName": "loadConfig",
+      "code": "export async function loadConfig(): Promise<Config> {\n  const explorer = cosmiconfig('codereviewer');\n  const result = await explorer.search();\n  const raw = (result?.config || {}) as Record<string, unknown>;\n\n  const ai =\n    raw.ai && typeof raw.ai === 'object' && !Array.isArray(raw.ai)\n      ? (raw.ai as Record<string, unknown>)\n      : {};\n  const defaults = {\n    ai: {\n      provider: 'ollama' as const,\n      ollama: { host: 'http://localhost:11434', model: 'codellama:13b' },\n      claude: { model: 'claude-sonnet-4-5-20250929' },\n      gemini: { model: 'gemini-2.0-flash' },\n    },\n    rules: { performance: true, readability: true, maintainability: true },\n    ignore: ['node_modules', 'dist', 'build'],\n    indexing: { enabled: true, embeddingModel: 'voyage-code-2' },\n  };\n  const merged = {\n    ...defaults,\n    ...raw,\n    ai: {\n      ...defaults.ai,\n      ...ai,\n      ...(process.env.ANTHROPIC_API_KEY && {\n        claude: {\n          ...defaults.ai.claude,\n          ...((ai.claude as object) || {}),\n          apiKey: process.env.ANTHROPIC_API_KEY,\n        },\n      }),\n      ...(process.env.GEMINI_API_KEY && {\n        gemini: {\n          ...defaults.ai.gemini,\n          ...((ai.gemini as object) || {}),\n          apiKey: process.env.GEMINI_API_KEY,\n        },\n      }),\n      ...(process.env.OLLAMA_HOST && {\n        ollama: {\n          ...defaults.ai.ollama,\n          ...((ai.ollama as object) || {}),\n          host: process.env.OLLAMA_HOST,\n        },\n      }),\n      ...(process.env.AI_PROVIDER && { provider: process.env.AI_PROVIDER }),\n    },\n  };\n\n  return ConfigSchema.parse(merged);\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": true,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 12
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/indexer/codebase-indexer.ts:categorizeSnippet:108",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/indexer/codebase-indexer.ts",
+      "functionName": "categorizeSnippet",
+      "code": "function categorizeSnippet(filePath: string, _code: string): SnippetCategory {\n  const lower = filePath.toLowerCase();\n  if (lower.includes('controller')) return 'controller';\n  if (lower.includes('service')) return 'service';\n  if (lower.includes('repository')) return 'repository';\n  if (lower.includes('middleware')) return 'middleware';\n  return 'util';\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": false,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 5
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/indexer/codebase-indexer.ts:extractKeywords:117",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/indexer/codebase-indexer.ts",
+      "functionName": "extractKeywords",
+      "code": "function extractKeywords(code: string): Set<string> {\n  const keywords = new Set<string>();\n  const importRe = /import\\s+.*?\\s+from\\s+['\"]([^'\"]+)['\"]/g;\n  const callRe = /(\\w+)\\s*\\(/g;\n  let m;\n  while ((m = importRe.exec(code))) keywords.add(m[1]);\n  while ((m = callRe.exec(code))) keywords.add(m[1]);\n  return keywords;\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": false,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 3
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/indexer/storage.ts:getTimeAgo:111",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/indexer/storage.ts",
+      "functionName": "getTimeAgo",
+      "code": "export function getTimeAgo(isoDate: string): string {\n  const ms = Date.now() - new Date(isoDate).getTime();\n  if (ms < 60_000) return 'just now';\n  if (ms < 3600_000) return `${Math.floor(ms / 60_000)}m ago`;\n  if (ms < 86400_000) return `${Math.floor(ms / 3600_000)}h ago`;\n  return `${Math.floor(ms / 86400_000)}d ago`;\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": false,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 4
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/cli/commands/analyze.ts:analyzeCommand:27",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/cli/commands/analyze.ts",
+      "functionName": "analyzeCommand",
+      "code": "export async function analyzeCommand(\n  paths: string[],\n  options: {\n    format: string;\n    provider?: string;\n    model?: string;\n    performance?: boolean;\n    readability?: boolean;\n    maintainability?: boolean;\n    diff?: boolean;\n    verbose?: boolean;\n  },\n) {\n  setVerbose(!!options.verbose);\n\n  if (options.verbose) {\n    step('Loading configuration...');\n  }\n  const config = await loadConfig();\n  verbose(`Provider: ${config.ai.provider}`);\n  if (config.ai.provider === 'ollama' && config.ai.ollama) {\n    verbose(`Model: ${config.ai.ollama.model}`);\n  } else if (config.ai.provider === 'claude' && config.ai.claude) {\n    verbose(`Model: ${config.ai.claude.model}`);\n  } else if (config.ai.provider === 'gemini' && config.ai.gemini) {\n    verbose(`Model: ${config.ai.gemini.model}`);\n  }\n\n  // Override provider/model from CLI options\n  if (options.provider) {\n    (config as { ai: Config['ai'] }).ai.provider =\n      options.provider as Config['ai']['provider'];\n  }\n  if (options.model) {\n    const p = config.ai.provider;\n    if (p === 'ollama' && config.ai.ollama)\n      config.ai.ollama.model = options.model;\n    else if (p === 'claude' && config.ai.claude)\n      config.ai.claude.model = options.model;\n    else if (p === 'gemini' && config.ai.gemini)\n      config.ai.gemini.model = options.model;\n  }\n\n  // Validate Ollama if selected\n  if (config.ai.provider === 'ollama') {\n    if (options.verbose) step('Checking Ollama connection...');\n    const host = config.ai.ollama?.host ?? 'http://localhost:11434';\n    const model = config.ai.ollama?.model ?? 'codellama:13b';\n    const ollamaCheck = new OllamaProvider(host, model);\n    const healthy = await ollamaCheck.healthCheck();\n    if (!healthy) {\n      logError(\n        'Ollama is not running. Start it with: ollama serve\\nOr run: code-reviewer setup',\n      );\n      process.exit(1);\n    }\n    const available = await ollamaCheck.isModelAvailable();\n    if (!available) {\n      logError(\n        `Model \"${model}\" not found. Pull it: ollama pull ${model}\\nOr run: code-reviewer setup`,\n      );\n      process.exit(1);\n    }\n    verbose('Ollama is ready.');\n  }\n\n  if (options.verbose) {\n    step('Resolving files to analyze...');\n  }\n  const spinner = ora(\n    options.verbose ? '' : 'Analyzing files...',\n  ).start();\n\n  // Resolve files\n  const ignorePatterns = config.ignore.flatMap((p) => [\n    `**/${p}/**`,\n    `**/${p}`,\n  ]);\n  const allFiles: string[] = [];\n  for (const p of paths) {\n    const resolved = path.resolve(p);\n    if (existsSync(resolved)) {\n      const fileStat = await stat(resolved);\n      if (fileStat.isFile() && /\\.tsx?$/.test(p)) {\n        allFiles.push(resolved);\n      } else if (fileStat.isDirectory()) {\n        const files = await fg('**/*.{ts,tsx}', {\n          cwd: resolved,\n          absolute: true,\n          ignore: ignorePatterns,\n        });\n        allFiles.push(...files);\n      }\n    }\n  }\n  const uniqueFiles = [...new Set(allFiles)];\n\n  if (uniqueFiles.length === 0) {\n    spinner.fail('No TypeScript files found to analyze.');\n    return;\n  }\n\n  if (options.verbose) {\n    verbose(`Found ${uniqueFiles.length} file(s):`);\n    uniqueFiles.forEach((f) => verbose(`  ${path.relative(process.cwd(), f) || f}`));\n  }\n\n  // Create tools\n  const tsAnalyzer = new TypeScriptAnalyzer();\n  const patternDetector = new PatternDetector();\n  const cache = new AnalysisCache();\n  const aiAnalyzer = new AIAnalyzer(config, cache, undefined, (event) => {\n    if (!options.verbose) return;\n    if (event.type === 'cache-hit') verbose('  Cache hit — using cached review.');\n    if (event.type === 'cache-miss')\n      verbose(`  Calling AI (${event.provider}/${event.model})...`);\n  });\n  const formatter = new ReportFormatter();\n\n  // Load index for similar patterns\n  if (options.verbose) step('Loading codebase index for similar patterns...');\n  const storage = new IndexStorage();\n  const indexSnippets = await storage.loadIndex();\n  verbose(`Index: ${indexSnippets.length} snippet(s) loaded.`);\n  const codebaseIndexer = new CodebaseIndexer(config.ignore);\n\n  const rules = {\n    performance: options.performance ?? config.rules.performance,\n    readability: options.readability ?? config.rules.readability,\n    maintainability: options.maintainability ?? config.rules.maintainability,\n  };\n\n  const total = uniqueFiles.length;\n  spinner.text = total === 1 ? 'Analyzing...' : `Analyzing ${total} file(s)...`;\n\n  for (let i = 0; i < uniqueFiles.length; i++) {\n    const filePath = uniqueFiles[i];\n    const current = i + 1;\n    const shortName = path.basename(filePath);\n    const progress =\n      total > 1 ? chalk.dim(` [${current}/${total}]`) : '';\n\n    try {\n      if (options.verbose) {\n        step(`Analyzing ${shortName}${progress}`);\n        verbose('  Reading file...');\n      }\n      const sourceCode = await readFile(filePath, 'utf-8');\n      if (options.verbose) verbose('  Parsing TypeScript...');\n      const metadata = await tsAnalyzer.analyzeFile(filePath);\n      if (options.verbose) verbose('  Detecting patterns...');\n      const detectedIssues = patternDetector.detectIssues(metadata, sourceCode);\n      const filtered = detectedIssues.filter((i) => rules[i.type]);\n      if (options.verbose)\n        verbose(`  Found ${filtered.length} issue(s) from static analysis.`);\n      const similarPatterns = codebaseIndexer.findSimilarPatterns(\n        sourceCode,\n        5,\n        indexSnippets,\n      );\n      if (options.verbose)\n        verbose(`  Using ${similarPatterns.length} similar pattern(s) from index.`);\n\n      spinner.text = `AI reviewing ${shortName}${progress}`;\n      const review = await aiAnalyzer.analyzeCode({\n        targetCode: sourceCode,\n        metadata,\n        detectedIssues: filtered,\n        similarPatterns,\n      });\n\n      if (options.verbose) verbose('  Formatting report...');\n      spinner.stop();\n      const report = formatter.format(review, options.format as OutputFormat);\n      console.log(report);\n      if (uniqueFiles.length > 1) console.log('');\n      spinner.start();\n    } catch (err) {\n      spinner.warn(\n        chalk.yellow(`Skipped ${filePath}: ${(err as Error).message}`),\n      );\n    }\n  }\n\n  spinner.stop();\n  success(`Completed analysis of ${uniqueFiles.length} file(s).`);\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": true,
+        "hasErrorHandling": true,
+        "usesAWS": false,
+        "complexity": 44
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/cli/commands/index.ts:indexCommand:13",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/cli/commands/index.ts",
+      "functionName": "indexCommand",
+      "code": "export async function indexCommand(options: {\n  path: string;\n  force?: boolean;\n  incremental?: boolean;\n  verbose?: boolean;\n}) {\n  setVerbose(!!options.verbose);\n\n  if (options.verbose) step('Loading configuration...');\n  const config = await loadConfig();\n  const rootPath = path.resolve(options.path);\n  verbose(`Root path: ${rootPath}`);\n  verbose(`Ignore patterns: ${config.ignore.join(', ') || 'none'}`);\n\n  const storage = new IndexStorage();\n  const indexer = new CodebaseIndexer(config.ignore);\n\n  const indexExists = await storage.indexExists();\n\n  if (options.force || !indexExists) {\n    if (options.verbose) {\n      step('Scanning codebase for TypeScript files...');\n    }\n    const spinner = ora(\n      options.verbose ? '' : 'Indexing codebase...',\n    ).start();\n    const snippets = await indexer.indexCodebase(rootPath);\n    const fileCount = [...new Set(snippets.map((s) => s.filePath))].length;\n    if (options.verbose) {\n      verbose(`Found ${fileCount} file(s), ${snippets.length} snippet(s).`);\n      step('Saving index to disk...');\n    }\n    await storage.saveIndex(snippets, rootPath);\n    spinner.stop();\n    success(\n      `Indexed ${snippets.length} snippet(s) from ${fileCount} file(s).`,\n    );\n    return;\n  }\n\n  if (options.incremental) {\n    if (options.verbose) step('Checking for changed files since last index...');\n    const spinner = ora(\n      options.verbose ? '' : 'Incremental indexing...',\n    ).start();\n    const incremental = new IncrementalIndexer(\n      storage,\n      indexer,\n      rootPath,\n      config.ignore,\n    );\n    const changedFiles = await incremental.getChangedFilesSinceLastIndex();\n    if (changedFiles.length === 0) {\n      spinner.stop();\n      success('No changed files since last index.');\n      return;\n    }\n    if (options.verbose) {\n      verbose(`${changedFiles.length} file(s) changed.`);\n      changedFiles.forEach((f) =>\n        verbose(`  ${path.relative(rootPath, f) || f}`),\n      );\n      step('Updating index...');\n    }\n    await incremental.updateIndex(changedFiles);\n    const stored = await storage.loadStoredIndex();\n    const total = stored?.snippets?.length ?? 0;\n    spinner.stop();\n    success(\n      `Updated index: ${changedFiles.length} file(s) changed, ${total} total snippet(s).`,\n    );\n    return;\n  }\n\n  // No --force, no --incremental, index exists\n  const age = await storage.getIndexAge();\n  const ageStr =\n    age !== null\n      ? age < 60000\n        ? 'just now'\n        : age < 3600000\n          ? `${Math.floor(age / 60000)}m ago`\n          : `${Math.floor(age / 3600000)}h ago`\n      : 'unknown';\n  info(\n    `Index exists (${ageStr}). Use --force to rebuild, --incremental to update.`,\n  );\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": true,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 17
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/cli/commands/models.ts:timeAgo:14",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/cli/commands/models.ts",
+      "functionName": "timeAgo",
+      "code": "function timeAgo(date: Date): string {\n  const ms = Date.now() - date.getTime();\n  if (ms < 60_000) return 'just now';\n  if (ms < 3_600_000) return `${Math.floor(ms / 60_000)}m ago`;\n  if (ms < 86_400_000) return `${Math.floor(ms / 3_600_000)}h ago`;\n  return `${Math.floor(ms / 86_400_000)}d ago`;\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": false,
+        "hasErrorHandling": false,
+        "usesAWS": false,
+        "complexity": 4
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/cli/commands/models.ts:modelsCommand:22",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/cli/commands/models.ts",
+      "functionName": "modelsCommand",
+      "code": "export async function modelsCommand() {\n  const config = await loadConfig();\n  const host = config.ai.ollama?.host ?? 'http://localhost:11434';\n  const provider = new OllamaProvider(host, 'any');\n\n  const spinner = ora('Connecting to Ollama...').start();\n  const healthy = await provider.healthCheck();\n  if (!healthy) {\n    spinner.fail(\n      chalk.red(\n        'Cannot connect to Ollama. Make sure it is running: ollama serve',\n      ),\n    );\n    process.exit(1);\n  }\n  spinner.text = 'Fetching models...';\n\n  try {\n    const models = await provider.listModels();\n    spinner.succeed(chalk.green(`Found ${models.length} model(s)`));\n    console.log('');\n\n    if (models.length === 0) {\n      console.log(chalk.dim('No models installed.'));\n      console.log(\n        `  Download one with: ${chalk.cyan('ollama pull codellama:13b')}`,\n      );\n      return;\n    }\n\n    const maxName = Math.max(...models.map((m) => m.name.length), 10);\n    console.log(\n      chalk.bold(\n        `  ${'MODEL'.padEnd(maxName + 2)}${'SIZE'.padEnd(12)}MODIFIED`,\n      ),\n    );\n    for (const m of models) {\n      console.log(\n        `  ${chalk.cyan(m.name.padEnd(maxName + 2))}${formatBytes(m.size).padEnd(12)}${timeAgo(m.modifiedAt)}`,\n      );\n    }\n    console.log('');\n    console.log(\n      chalk.dim(`  Tip: To download a model run: ollama pull <model-name>`),\n    );\n  } catch (err) {\n    spinner.fail(chalk.red(`Failed to list models: ${(err as Error).message}`));\n    process.exit(1);\n  }\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": true,
+        "hasErrorHandling": true,
+        "usesAWS": false,
+        "complexity": 4
+      }
+    },
+    {
+      "id": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/cli/commands/setup.ts:setupCommand:38",
+      "filePath": "/Users/rafaelsousa/Developer/Personal/ia-tryout/src/cli/commands/setup.ts",
+      "functionName": "setupCommand",
+      "code": "export async function setupCommand() {\n  console.log(chalk.bold.underline('Code Reviewer — Ollama Setup\\n'));\n\n  // 1. Check Ollama installed\n  const installSpinner = ora('Checking Ollama installation...').start();\n  try {\n    const { stdout } = await execa('ollama', ['--version']);\n    installSpinner.succeed(chalk.green(`Ollama found: ${stdout.trim()}`));\n  } catch {\n    installSpinner.fail(chalk.red('Ollama is not installed.'));\n    console.log('');\n    console.log(chalk.bold('Install instructions:'));\n    console.log(\n      `  ${chalk.cyan('macOS:')}    curl -fsSL https://ollama.com/install.sh | sh`,\n    );\n    console.log(\n      `  ${chalk.cyan('Linux:')}    curl -fsSL https://ollama.com/install.sh | sh`,\n    );\n    console.log(\n      `  ${chalk.cyan('Windows:')}  Download from https://ollama.com/download`,\n    );\n    process.exit(1);\n  }\n\n  // 2. Check Ollama running\n  const runSpinner = ora('Checking Ollama is running...').start();\n  const testProvider = new OllamaProvider('http://localhost:11434', 'test');\n  const healthy = await testProvider.healthCheck();\n  if (!healthy) {\n    runSpinner.fail(chalk.red('Ollama is not running.'));\n    console.log(`\\n  Start it with: ${chalk.cyan('ollama serve')}\\n`);\n    process.exit(1);\n  }\n  runSpinner.succeed(chalk.green('Ollama is running.'));\n\n  // 3. Show recommended models\n  console.log('');\n  console.log(chalk.bold('Recommended models:'));\n  RECOMMENDED_MODELS.forEach((m, i) => {\n    console.log(\n      `  ${chalk.cyan(String(i + 1))}. ${chalk.bold(m.name)} ${chalk.dim(`(${m.size})`)}`,\n    );\n    console.log(`     ${m.desc}`);\n  });\n  console.log('');\n\n  // 4. Prompt user to choose\n  let selectedModel = RECOMMENDED_MODELS[0].name;\n\n  if (process.stdin.isTTY) {\n    const rl = createInterface({\n      input: process.stdin,\n      output: process.stdout,\n    });\n    const answer = await rl.question(\n      `Choose a model [1-${RECOMMENDED_MODELS.length}] (default: 1): `,\n    );\n    rl.close();\n\n    const choice = parseInt(answer.trim(), 10);\n    if (choice >= 1 && choice <= RECOMMENDED_MODELS.length) {\n      selectedModel = RECOMMENDED_MODELS[choice - 1].name;\n    }\n  } else {\n    console.log(\n      chalk.dim(`Non-interactive mode, defaulting to ${selectedModel}`),\n    );\n  }\n\n  console.log(`\\nSelected: ${chalk.bold.green(selectedModel)}`);\n\n  // 5. Pull model\n  const pullSpinner = ora(\n    `Pulling ${selectedModel}... (this may take a while)`,\n  ).start();\n  try {\n    await execa('ollama', ['pull', selectedModel], { stdio: 'pipe' });\n    pullSpinner.succeed(chalk.green(`Model ${selectedModel} is ready.`));\n  } catch (err) {\n    pullSpinner.fail(\n      chalk.red(`Failed to pull ${selectedModel}: ${(err as Error).message}`),\n    );\n    process.exit(1);\n  }\n\n  // 6. Write .codereviewerrc.json\n  const configPath = path.join(process.cwd(), '.codereviewerrc.json');\n  const config = {\n    ai: {\n      provider: 'ollama',\n      ollama: {\n        host: 'http://localhost:11434',\n        model: selectedModel,\n      },\n    },\n    rules: {\n      performance: true,\n      readability: true,\n      maintainability: true,\n    },\n    ignore: ['node_modules', 'dist', '.git', 'coverage'],\n    indexing: {\n      autoIndex: true,\n      maxFileSize: 50000,\n    },\n  };\n  await writeFile(configPath, JSON.stringify(config, null, 2));\n  console.log(\n    chalk.green(\n      `\\nConfiguration written to ${chalk.bold('.codereviewerrc.json')}`,\n    ),\n  );\n\n  // 7. Next steps\n  console.log('');\n  console.log(chalk.bold('Next steps:'));\n  console.log(\n    `  1. ${chalk.cyan('code-reviewer index')}     — index your codebase`,\n  );\n  console.log(\n    `  2. ${chalk.cyan('code-reviewer analyze src/')} — run your first review`,\n  );\n  console.log('');\n}",
+      "category": "util",
+      "metadata": {
+        "isAsync": true,
+        "hasErrorHandling": true,
+        "usesAWS": false,
+        "complexity": 5
+      }
+    }
+  ],
+  "metadata": {
+    "totalFiles": 13,
+    "totalSnippets": 15,
+    "categories": {
+      "util": 15
+    },
+    "languages": [
+      "typescript"
+    ]
+  }
+}

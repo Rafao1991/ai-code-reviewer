@@ -1,0 +1,58 @@
+# Example: Code review with Ollama (self-hosted runner)
+# Copy to .github/workflows/code-review.yml and ensure your runner has Ollama + model.
+name: Code Review (Ollama)
+
+on:
+  pull_request:
+    paths:
+      - '**.ts'
+      - '**.tsx'
+
+jobs:
+  review:
+    runs-on: self-hosted # Runner must have Ollama and codellama:13b
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install code-reviewer
+        run: npm install -g .
+
+      - name: Pull model (if needed)
+        run: ollama pull codellama:13b || true
+
+      - name: Get changed TypeScript files
+        id: files
+        run: |
+          FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD 2>/dev/null | grep -E '\.tsx?$' | tr '\n' ' ' || true)
+          echo "paths=$FILES" >> $GITHUB_OUTPUT
+
+      - name: Run code review
+        id: review
+        if: steps.files.outputs.paths != ''
+        run: |
+          code-reviewer analyze ${{ steps.files.outputs.paths }} \
+            --provider ollama \
+            --model codellama:13b \
+            --format markdown > review.md
+          echo "review<<EOF" >> $GITHUB_OUTPUT
+          cat review.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Comment on PR
+        if: steps.review.outcome == 'success' && steps.files.outputs.paths != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('review.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## Code Review\n\n' + body
+            });

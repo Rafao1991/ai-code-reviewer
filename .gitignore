@@ -1,0 +1,28 @@
+# Node.js
+node_modules/
+
+# Build
+dist/
+dist-bin/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Cursor
+.cursor/
+
+# Code Reviewer
+.code-reviewer/cache/
+.code-reviewer/vectors.db/
+
+# Coverage
+coverage/

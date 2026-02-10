@@ -1,0 +1,59 @@
+{
+  "name": "ai-code-reviewer",
+  "version": "0.1.0",
+  "description": "Context-aware AI-powered code review tool",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "dist/index.cjs",
+  "bin": {
+    "code-reviewer": "./dist/index.cjs"
+  },
+  "scripts": {
+    "build": "tsup",
+    "start": "node dist/index.cjs",
+    "dev": "tsx src/cli/index.ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage --silent",
+    "prepublishOnly": "npm run build",
+    "build:bin": "npm run build && pkg dist/index.cjs --targets node20-macos-x64,node20-macos-arm64,node20-linux-x64,node20-win-x64 --output dist-bin/code-reviewer"
+  },
+  "keywords": [
+    "code-review",
+    "ai",
+    "typescript",
+    "static-analysis"
+  ],
+  "author": "Rafael Sousa",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafaelsousa/ia-tryout.git"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.74.0",
+    "@google/genai": "^1.40.0",
+    "@types/node": "^25.2.2",
+    "@vitest/coverage-v8": "^3.2.4",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.3",
+    "cosmiconfig": "^9.0.0",
+    "execa": "^9.6.1",
+    "fast-glob": "^3.3.3",
+    "ollama": "^0.6.3",
+    "ora": "^9.3.0",
+    "ts-morph": "^27.0.2",
+    "@yao-pkg/pkg": "^6.0.0",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4",
+    "zod": "^4.3.6"
+  }
+}
