@@ -1,6 +1,6 @@
 {
   "name": "local-ai-code-reviewer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Context-aware AI-powered code review tool",
   "type": "module",
   "engines": {
@@ -8,7 +8,7 @@
   },
   "main": "dist/index.cjs",
   "bin": {
-    "code-reviewer": "./dist/index.cjs"
+    "code-reviewer": "dist/index.cjs"
   },
   "scripts": {
     "build": "tsup",
@@ -29,7 +29,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rafaelsousa/ia-tryout.git"
+    "url": "git+https://github.com/Rafao1991/ai-code-reviewer.git"
   },
   "files": [
     "dist",
